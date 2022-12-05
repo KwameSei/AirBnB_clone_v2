@@ -117,26 +117,25 @@ class HBNBCommand(cmd.Cmd):
         """ Create an object of any class
             Users not limited to number of parameters to provide
         """
-        
-        args = args.split() # Split arguments into individual constituents
-        if not args:
-            print("** class name missing **")
-            return
 
-        if args[0] not in HBNBCommand.classes:  #Find out if first argument is a class
+        args = args.split()     # Split arguments into individual constituents
+
+        # Find out if first argument is a class
+        if args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
-        class_args = args[0]  # Create new instances of the class argument if it exists
+        # Create new instances of the class argument if it exists
+        class_args = args[0]
         new_instance = HBNBCommand.classes[class_args]()
 
         # Printing args[2]
-        x = len(args)    #Length of all the arguments
+        x = len(args)    # Length of all the arguments
         for y in range(1, x):
             args_list = args[y].split("=")
 
             if ('"' in args_list[1]):
-                p1 = args_list[1].strip('=')
+                p1 = args_list[1].strip('"')
                 if ("_" in p1):
                     p1 = p1.replace('_', ' ')
 
@@ -343,6 +342,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
