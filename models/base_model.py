@@ -23,29 +23,31 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
-            #for k in kwargs:
-             #   if k in ['created_at', 'updated_at']:
-              #      setattr(self, k, datetime.fromisoformat(kwargs[k]))
-               # elif k != '__class__':
-                #    setattr(self, k, kwargs[k])
+            """
+            for k in kwargs:
+                if k in ['created_at', 'updated_at']:
+                    setattr(self, k, datetime.fromisoformat(kwargs[k]))
+                elif k != '__class__':
+                    setattr(self, k, kwargs[k])
 
-                #if storage_type == 'db':
-                 #   if not hasattr(kwargs, 'id'):
-                  #      setattr(self, 'id', str(uuid.uuid()))
-                   # if not hasattr(kwargs, 'created_at'):
-                    #    setattr(self, 'created_at', datetime.now())
-                    #if not hasattr(kwargs, 'updated_at'):
-                     #   setattr(self, 'updated_at', datetime.now())
+                if storage_type == 'db':
+                    if not hasattr(kwargs, 'id'):
+                        setattr(self, 'id', str(uuid.uuid()))
+                    if not hasattr(kwargs, 'created_at'):
+                        setattr(self, 'created_at', datetime.now())
+                    if not hasattr(kwargs, 'updated_at'):
+                        setattr(self, 'updated_at', datetime.now())
+                """
 
-                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
+            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
-                kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
+            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
-                del kwargs['__class__']
-                self.__dict__.update(kwargs)
+            del kwargs['__class__']
+            self.__dict__.update(kwargs)
 
-                for key, value in kwargs.items():
-                    setattr(self, key, value)
+            for key, value in kwargs.items():
+                setattr(self, key, value)
 
     def __str__(self):
         """Returns a string representation of the instance"""
