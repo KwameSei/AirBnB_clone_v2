@@ -16,10 +16,11 @@ class DBStorage:
     def __init__(self):
         user = os.environ.get("HBNB_MYSQL_USER")
         password = os.environ.get("HBNB_MYSQL_PWD")
-        host = os.environ.get("HBNB_MYSQL_HOST") # (here = localhost)
+        host = os.environ.get("HBNB_MYSQL_HOST")    # (here = localhost)
         database = os.environ.get("HBNB_MYSQL_DB")
         env = os.environ.get("HBNB_ENV")
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(user, password, host, database, pool_pre_ping=True))
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
+                                                .format(user, password, host, database, pool_pre_ping=True))
 
         if (env == "test"):
             Base.metadata.drop_all(self.__engine)
@@ -29,15 +30,15 @@ class DBStorage:
             query on the current database session (self.__session)
             all objects depending of the class name (argument cls)
         """
-
         """
-            all_classes = ["State", "City", "Amenity", "User", "Place", "Review"]
-    
+            all_classes = ["State", "City", "Amenity", 
+            "User", "Place", "Review"]
+
             entities = dict()
-    
+
             if cls:
                 return self.get_data_from_table(cls, entities)
-   
+
             for entity in all_classes:
                 entities = self.get_data_from_table(eval(entity), entities)
             return entities
