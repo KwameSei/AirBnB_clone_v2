@@ -10,7 +10,7 @@ from models.user import User
 from models.state import State
 from models.city import City
 #from models.amenity import Amenity
-#from models.place import Place
+from models.place import Place
 #from models.review import Review
 
 
@@ -58,9 +58,9 @@ class DBStorage:
             res_list.extend(self.__session.query(User))
             #res_list.extend(self.__session.query(Amenity))
             res_list.extend(self.__session.query(City))
-            #res_list.extend(self.__session.query(Place))
+            res_list.extend(self.__session.query(Place))
             #res_list.extend(self.__session.query(Review))
-            res_list.extend(self.__session.query(City))
+           # res_list.extend(self.__session.query(City))
         else:
             res_list = self.__session.query(cls).all()
         
