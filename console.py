@@ -136,20 +136,20 @@ class HBNBCommand(cmd.Cmd):
         kw_args = {}
         x = len(args)    # Length of all the arguments
         for y in range(1, x):
-            args_list = args[y].split("=")
+            param_list = args[y].split("=")
 
-            if ('"' in args_list[1]):
-                p1 = args_list[1].strip('"')
+            if ('"' in param_list[1]):
+                p1 = param_list[1].strip('"')
                 if ("_" in p1):
                     p1 = p1.replace('_', ' ')
 
-            elif ('.' in args_list[1]):
-                p1 = float(args_list[1])
+            elif ('.' in param_list[1]):
+                p1 = float(param_list[1])
             else:
-                p1 = int(args_list[1])
-            setattr(new_instance, args_list[0], p1)
+                p1 = int(param_list[1])
+            setattr(new_instance, param_list[0], p1)
 
-#        storage.new(new_instance)
+        storage.new(new_instance)
         print(new_instance.id)
         storage.save()
 
