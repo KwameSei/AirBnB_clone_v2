@@ -6,6 +6,12 @@ from models.base_model import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
+from models.user import User
+from models.state import State
+from models.city import City
+#from models.amenity import Amenity
+#from models.place import Place
+#from models.review import Review
 
 
 class DBStorage:
@@ -49,10 +55,11 @@ class DBStorage:
             from models.city import City
 
             res_list = (self.__session.query(State)).all()
-            res_list.extend(self.__session.query(Amenity))
+            res_list.extend(self.__session.query(User))
+            #res_list.extend(self.__session.query(Amenity))
             res_list.extend(self.__session.query(City))
-            res_list.extend(self.__session.query(Place))
-            res_list.extend(self.__session.query(Review))
+            #res_list.extend(self.__session.query(Place))
+            #res_list.extend(self.__session.query(Review))
             res_list.extend(self.__session.query(City))
         else:
             res_list = self.__session.query(cls).all()
