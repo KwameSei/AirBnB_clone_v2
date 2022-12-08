@@ -9,9 +9,9 @@ from sqlalchemy.orm import sessionmaker
 from models.user import User
 from models.state import State
 from models.city import City
-#from models.amenity import Amenity
+from models.amenity import Amenity
 from models.place import Place
-#from models.review import Review
+from models.review import Review
 
 
 class DBStorage:
@@ -50,6 +50,7 @@ class DBStorage:
             return entities
         """
         """ Queries a database for objects """
+        """
         if not cls:
             from models.state import State
             from models.city import City
@@ -59,7 +60,7 @@ class DBStorage:
             #res_list.extend(self.__session.query(Amenity))
             res_list.extend(self.__session.query(City))
             res_list.extend(self.__session.query(Place))
-            #res_list.extend(self.__session.query(Review))
+            res_list.extend(self.__session.query(Review))
            # res_list.extend(self.__session.query(City))
         else:
             res_list = self.__session.query(cls).all()
@@ -69,10 +70,35 @@ class DBStorage:
                 for obj in res_list}
         else:
          print("Welcome")
+        """
+        
+        obj_dict = {}
 
-    def new(self, obj):
+        if cls is None:
+            classes = {'State': State, 'City': City, 'User': User,
+                    'Place': Place, 'Review': Review, 'Amenity': Amenity}
+
+            for key, value in classes.items():
+                all_obj = self.__session.query(value).all()
+
+                for one_obj in all_obj:
+                    key = "{}.{}".format(type(one_obj).__name__, one_obj.id)
+                    # Print (key)
+                    obj_dict[key] = one_obj
+                else:
+                    if type(cls) == str:
+                        cls = eval(cls)
+                    all_obj = self.__session.query(cls)
+                    for one_obj in all_obj:
+                        key = "{}.{}".format(type(one_obj).__name__, one_obj.id)
+                        obj_dict[key] = one_obj
+
+                # print(obj_dict)
+                return obj_dict
+
+    def new(self, one_obj):
         """Adds new object to the current database session"""
-        self.__session.add(obj)
+        self.__session.add(one_obj)
 
     def save(self):
         """Commit all changes to the current database"""
@@ -85,9 +111,9 @@ class DBStorage:
         Session = scoped_session(session_factory)
         self.__session = Session()
         
-    def delete(self, obj=None):
+    def delete(self, one_obj=None):
         """Deletes from the current database"""
-        if (obj):
-            self.__session.delete(obj)
+        if (one_obj):
+            self.__session.delete(one_obj)
         else:
             pass
