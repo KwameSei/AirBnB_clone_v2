@@ -11,7 +11,8 @@ sudo mkdir -p /data/web_static/releases/test /data/web_static/shared/
 # Creating a test file
 echo "<h2>Welcome to $hostname Web Page</h1>" | sudo tee /data/web_static/releases/test/index.html
 
-echo "server {
+echo "
+server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
 
@@ -36,19 +37,17 @@ echo "server {
 	}
 }" | sudo tee /etc/nginx/sites-available/default
 
-# Prevent Overwriting
-if [ -d "/data/web_static/current" ]
-then
-	echo "path /data/web_static/current exists"
-	sudo rm -rf /data/web_static/current;
-fi;
-
 # Creating symbolic link
 sudo ln -sf /data/web_static/releases/test /data/web_static/current
-sudo chown -hR ubuntu:ubuntu /data
+
+# Prevent Overwriting
+sudo rm -rf /etc/nginx/sites-enabled
 
 #updating nginx to serve content
 sudo ln -sf /etc/nginx/sites-available/ /etc/nginx/sites-enabled
+
+# Change ownership
+sudo chown -hR ubuntu:ubuntu /data
 
 #restarting nginx
 sudo service nginx restart
