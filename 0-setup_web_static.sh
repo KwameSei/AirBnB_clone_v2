@@ -9,7 +9,7 @@ sudo apt-get install nginx -y
 sudo mkdir -p /data/web_static/releases/test /data/web_static/shared/
 
 # Creating a test file
-echo "<h2>Welcome to $hostname Web Page</h1>" | sudo tee /data/web_static/releases/test/index.html
+echo "Welcome my buddy! Come back for an exciting news soon" | sudo tee /data/web_static/releases/test/index.html
 
 echo "
 server {
@@ -19,19 +19,17 @@ server {
 	root /var/www/html;
 	index index.html index.htm index.nginx-debian,html;
 
-	server_name _;
 	add_header X-Served-By $hostname;
 
-	location / {
-		try_files $uri $uri/ =404;
-	}
-	location /redirect_me {
-		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-	}
 	error_page 404 /404.html;
 	location = /404.html {
 		internal;
 	}
+
+	location /redirect_me {
+		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+	}
+
 	location /hbnb_static {
 		alias /data/web_static/current/;
 	}
