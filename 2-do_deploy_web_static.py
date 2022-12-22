@@ -26,7 +26,6 @@ def do_pack():
         cur_time.minute,
         cur_time.second,
      )
-
     try:
         print("Packing web_static to {}".format(output))
         local("tar -cvzf {} web_static".format(output))
