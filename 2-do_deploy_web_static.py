@@ -6,13 +6,11 @@
 import os
 from datetime import datetime
 from fabric.api import env, local, put, run, runs_once
-from fabric.decorator import runs_once
 
 env.hosts = ['52.86.124.17', '18.234.80.128']
 env.user = "ubuntu"
 
 
-@runs_once
 def do_pack():
     """Archives the static files."""
     if not os.path.isdir("versions"):
