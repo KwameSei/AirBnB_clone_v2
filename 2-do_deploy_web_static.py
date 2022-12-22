@@ -9,10 +9,11 @@ from fabric.api import env, local, put, run, runs_once
 
 
 env.hosts = ['52.86.124.17', '18.234.80.128']
+env.user = "ubuntu"
 
 
-def do_deploy(archive_path):
-    """Distributes an archive to a web server.
+def do_pack(archive_path):
+    """Distributes  an archive to a web server.
         Args:
             archive_path (str): The path of the archive to distribute.
         Returns:
