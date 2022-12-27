@@ -37,7 +37,8 @@ server {
 }
 echo SERVER_BLOCK | sudo tee /etc/nginx/sites-available/default
 
-sudo rm -rf /data/web_static/current;
+# Prevent overwriting
+sudo rm -rf /etc/nginx/sites-enabled/
 
 # Creating symbolic link
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
