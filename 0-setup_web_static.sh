@@ -11,7 +11,7 @@ sudo mkdir -p /data/web_static/releases/test/ /data/web_static/shared/
 # Creating a test file
 echo "Welcome my buddy! Come back for an exciting news soon" | sudo tee /data/web_static/releases/test/index.html
 
-SERVER_BLOCK=\
+echo "
 server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
@@ -34,8 +34,7 @@ server {
 	location /hbnb_static {
 		alias /data/web_static/current/;
 	}
-}
-echo SERVER_BLOCK | sudo tee /etc/nginx/sites-available/default
+}" | sudo tee /etc/nginx/sites-available/default
 
 # Creating symbolic link
 sudo ln -sf /data/web_static/releases/test /data/web_static/current
