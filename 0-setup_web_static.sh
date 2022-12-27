@@ -50,7 +50,7 @@ sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -hR ubuntu:ubuntu /data
 
 #updating nginx to serve content
-sudo ln -sf '/etc/nginx/sites-available/default' '/etc/nginx/sites-enabled/default'
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 #restarting nginx
 sudo service nginx restart
