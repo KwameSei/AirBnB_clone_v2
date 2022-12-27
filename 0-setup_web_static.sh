@@ -6,15 +6,16 @@ sudo apt-get update
 sudo apt-get install nginx -y
 
 # Create directories
-sudo mkdir -p /data/web_static/releases/test /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/ /data/web_static/shared/
 
 # Creating a test file
 echo "Welcome my buddy! Come back for an exciting news soon" | sudo tee /data/web_static/releases/test/index.html
 
-echo "
+SERVER_BLOCK=\
 server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
+	server_name nathanielosei.tech www.nathanielosei.tech
 
 	root /var/www/html;
 	index index.html index.htm index.nginx-debian,html;
@@ -33,19 +34,23 @@ server {
 	location /hbnb_static {
 		alias /data/web_static/current/;
 	}
-}" | sudo tee /etc/nginx/sites-available/default
+}
+echo SERVER_BLOCK | sudo tee /etc/nginx/sites-available/default
+
+# Prevent overwrite
+if [ -d "/data/web_static/current" ]
+then
+	echo "path /data/web_static/current exists"
+	sudo rm -rf /data/web_static/current;
+fi;
 
 # Creating symbolic link
-sudo ln -sf /data/web_static/releases/test /data/web_static/current
-
-# Prevent Overwriting
-sudo rm -rf /etc/nginx/sites-enabled
-
-#updating nginx to serve content
-sudo ln -sf /etc/nginx/sites-available/ /etc/nginx/sites-enabled
-
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 # Change ownership
 sudo chown -hR ubuntu:ubuntu /data
+
+#updating nginx to serve content
+sudo ln -sf '/etc/nginx/sites-available/default' '/etc/nginx/sites-enabled/default'
 
 #restarting nginx
 sudo service nginx restart
