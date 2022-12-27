@@ -37,12 +37,7 @@ server {
 }
 echo SERVER_BLOCK | sudo tee /etc/nginx/sites-available/default
 
-# Prevent overwrite
-if [ -d "/data/web_static/current" ]
-then
-	echo "path /data/web_static/current exists"
-	sudo rm -rf /data/web_static/current;
-fi;
+sudo rm -rf /data/web_static/current;
 
 # Creating symbolic link
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
