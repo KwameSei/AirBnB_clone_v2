@@ -36,11 +36,15 @@ server {
 	}
 }" | sudo tee /etc/nginx/sites-available/default
 
+# Prevent overwriting
+if [ -d "/data/web_static/current" ]
+then
+	echo "path /data/web_static/current exists"
+ 	sudo rm -rf /data/web_static/current;
+fi;
+
 # Creating symbolic link
 sudo ln -sf /data/web_static/releases/test /data/web_static/current
-
-# Prevent overwriting
-sudo rm -rf /etc/nginx/sites-enabled
 
 #updating nginx to serve content
 sudo ln -sf /etc/nginx/sites-available/ /etc/nginx/sites-enabled
