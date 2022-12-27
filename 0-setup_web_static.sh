@@ -38,15 +38,16 @@ server {
 echo SERVER_BLOCK | sudo tee /etc/nginx/sites-available/default
 
 # Creating symbolic link
-sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
-# Change ownership
-sudo chown -hR ubuntu:ubuntu /data
+sudo ln -sf /data/web_static/releases/test /data/web_static/current
 
 # Prevent overwriting
-sudo rm -rf /etc/nginx/sites-enabled/
+sudo rm -rf /etc/nginx/sites-enabled
 
 #updating nginx to serve content
-sudo ln -sf /etc/nginx/sites-available /etc/nginx/sites-enabled
+sudo ln -sf /etc/nginx/sites-available/ /etc/nginx/sites-enabled
+
+# Change ownership
+sudo chown -hR ubuntu:ubuntu /data
 
 #restarting nginx
 sudo service nginx restart
