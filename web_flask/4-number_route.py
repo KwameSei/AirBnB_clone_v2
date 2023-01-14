@@ -43,7 +43,7 @@ def python_page(text="is cool"):
 def number_page(n):
     """Displaying Number"""
 
-    return "{}".format(n)
+    return "{} is a number".format(n)
 
 
 if __name__ == '__main__':
