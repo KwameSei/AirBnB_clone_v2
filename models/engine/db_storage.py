@@ -117,3 +117,7 @@ class DBStorage:
             self.__session.delete(one_obj)
         else:
             pass
+
+    def close(self):
+        """Closing the session"""
+        self.__session.close()
