@@ -26,7 +26,12 @@ class DBStorage:
         database = os.environ.get("HBNB_MYSQL_DB")
         env = os.environ.get("HBNB_ENV")
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                                .format(user, password, host, database, pool_pre_ping=True))
+                                      .format(
+                                                user,
+                                                password,
+                                                host,
+                                                database,
+                                                pool_pre_ping=True))
 
         if (env == "test"):
             Base.metadata.drop_all(self.__engine)
@@ -37,7 +42,7 @@ class DBStorage:
             all objects depending of the class name (argument cls)
         """
         """
-            all_classes = ["State", "City", "Amenity", 
+            all_classes = ["State", "City", "Amenity",
             "User", "Place", "Review"]
 
             entities = dict()
@@ -64,19 +69,19 @@ class DBStorage:
            # res_list.extend(self.__session.query(City))
         else:
             res_list = self.__session.query(cls).all()
-        
+
         if res_list:
             return {'{}.{}'.format(type(obj).__name__, obj.id): obj
                 for obj in res_list}
         else:
          print("Welcome")
         """
-        
+
         obj_dict = {}
 
         if cls is None:
             classes = {'State': State, 'City': City, 'User': User,
-                    'Place': Place, 'Review': Review, 'Amenity': Amenity}
+                       'Place': Place, 'Review': Review, 'Amenity': Amenity}
 
             for key, value in classes.items():
                 all_obj = self.__session.query(value).all()
@@ -90,7 +95,8 @@ class DBStorage:
                         cls = eval(cls)
                     all_obj = self.__session.query(cls)
                     for one_obj in all_obj:
-                        key = "{}.{}".format(type(one_obj).__name__, one_obj.id)
+                        key = "{}.{}".format(type(one_obj).__name__,
+                                             one_obj.id)
                         obj_dict[key] = one_obj
 
                 # print(obj_dict)
@@ -107,10 +113,11 @@ class DBStorage:
     def reload(self):
         """Creates all tables in the database"""
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
-        
+
     def delete(self, one_obj=None):
         """Deletes from the current database"""
         if (one_obj):
