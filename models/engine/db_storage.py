@@ -90,17 +90,18 @@ class DBStorage:
                     key = "{}.{}".format(type(one_obj).__name__, one_obj.id)
                     # Print (key)
                     obj_dict[key] = one_obj
-                else:
-                    if type(cls) == str:
-                        cls = eval(cls)
-                    all_obj = self.__session.query(cls)
-                    for one_obj in all_obj:
-                        key = "{}.{}".format(type(one_obj).__name__,
-                                             one_obj.id)
-                        obj_dict[key] = one_obj
+        else:
+            if type(cls) == str:
+                cls = eval(cls)
+                all_obj = self.__session.query(cls)
+                for one_obj in all_obj:
+                    key = one_obj.__class__.__name__ + '.' + one_obj.id
+                    #key = "{}.{}".format(type(one_obj).__name__,
+                    #                    one_obj.id)
+                    obj_dict[key] = one_obj
 
-                # print(obj_dict)
-                return obj_dict
+         #       print(obj_dict)
+        return obj_dict
 
     def new(self, one_obj):
         """Adds new object to the current database session"""
